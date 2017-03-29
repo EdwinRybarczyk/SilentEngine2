@@ -73,6 +73,9 @@
     <IncludePath>C:\Users\Edwin\Source\Repos\SilentEngine2\SilentEngine2\SilentEngine2\include\GLEW\GL;C:\Users\Edwin\Source\Repos\SilentEngine2\SilentEngine2\SilentEngine2\include\SDL2;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Edwin\Source\Repos\SilentEngine2\SilentEngine2\SilentEngine2\Lib\GLEW\Release\x64;C:\Users\Edwin\Source\Repos\SilentEngine2\SilentEngine2\SilentEngine2\Lib\SDL2\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\Edwin\Source\Repos\SilentEngine2\SilentEngine2\SilentEngine2\include\GLEW\GL;C:\Users\Edwin\Source\Repos\SilentEngine2\SilentEngine2\SilentEngine2\include\SDL2;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -87,7 +90,7 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -119,6 +122,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="SilentEngine.cpp" />
+    <ClCompile Include="SilentWindow.cpp" />
+    <ClCompile Include="TEST.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PSilentWindow.h" />
+    <ClInclude Include="SilentEngine.h" />
+    <ClInclude Include="SilentWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
