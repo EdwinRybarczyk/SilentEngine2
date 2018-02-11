@@ -1,3 +1,4 @@
+#include "../SilentEntities/SilentEntity.hpp"
 namespace SilentRenderingEngine
 {
     class SilentRenderer
@@ -7,6 +8,8 @@ namespace SilentRenderingEngine
         public:
         SilentRenderer();
         ~SilentRenderer();
-        void SilentRender();
+        void prepare();
+        void renderEntity(SilentEntities::SilentEntity entity);
+        void render();
     };
 }

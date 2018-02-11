@@ -90,7 +90,7 @@ namespace SilentSystem
                 this->~SilentWindow();
             }
         }
-        glClear(GL_COLOR_BUFFER_BIT);
+        //glClear(GL_COLOR_BUFFER_BIT);
         SDL_GL_SwapWindow(window);
         SDL_Delay(1);
     }
