@@ -64,6 +64,17 @@ namespace SilentRenderingEngine
         }
         glShaderSource(shaderID, 1, &sourceData,&sourceLength);
         glCompileShader(shaderID);
+        
+        int bufferSize;
+        glGetShaderiv(shaderID,GL_INFO_LOG_LENGTH, &bufferSize);
+        if(bufferSize > 1)
+        {
+            char* outstr = (char*)malloc(bufferSize+1);
+            glGetShaderInfoLog(shaderID, bufferSize, 0, outstr);
+            printf("shader output: %s\n",outstr);
+            free(outstr);
+        }
+
         int success = 0;
         glGetShaderiv(shaderID,GL_COMPILE_STATUS,&success);
         if(success == GL_FALSE)

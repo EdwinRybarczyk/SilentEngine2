@@ -18,9 +18,11 @@ int main()
     shaderProgram.loadShader("src/SilentRenderer/vertexShader.txt",vertexShader);
     shaderProgram.loadShader("src/SilentRenderer/fragmentShader.txt",fragmentShader);
     shaderProgram.load();
+    shaderProgram.bindAttribute(0,"position");
+    shaderProgram.bindAttribute(1,"texCoord");
 
     SilentRenderer renderer;
-    SilentEntity sampleEntity = loadOBJModel("src/triangle.obj");
+    SilentEntity sampleEntity = loadOBJModel("src/plane.obj","src/meme.png");
     sampleEntity.load();
     while(window.windowOpen)
     {

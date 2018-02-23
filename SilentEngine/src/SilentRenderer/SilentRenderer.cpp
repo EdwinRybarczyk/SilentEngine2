@@ -28,13 +28,18 @@ namespace SilentRenderingEngine
     {
         glBindVertexArray(entity.getVAOID());
         glEnableVertexAttribArray(0);
-        
+        glEnableVertexAttribArray(1);
+        glBindTexture(GL_TEXTURE_2D,entity.getTextureID());
+
         glDrawElements(
             GL_TRIANGLES,
             entity.model.vertices.size(),
             GL_UNSIGNED_INT,
             0
         );
+
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
 
         glBindVertexArray(0);
     }

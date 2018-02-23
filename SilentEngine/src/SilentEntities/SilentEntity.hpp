@@ -18,6 +18,7 @@ namespace SilentEntities
         private:
         unsigned int vaoID;
         unsigned int vertBufferID;
+        unsigned int texBufferID;
         unsigned int IndBufferID;
         unsigned int textureID;
 
@@ -36,8 +37,10 @@ namespace SilentEntities
         unsigned int getVAOID();
         unsigned int getIndID();
         unsigned int getVertID();
+        unsigned int getTextureID();
+        void setTextureID(unsigned int ID);
     };
 
 
-    SilentEntity loadOBJModel(std::string path);
+    SilentEntity loadOBJModel(std::string modelPath, std::string texturePath);
 }

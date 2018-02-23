@@ -2,6 +2,7 @@
 #include <string.h>
 #define GL_GLEXT_PROTOTYPES
 #include <GL/gl.h>
+#include <SDL2/SDL_image.h>
 using namespace SilentMaths;
 namespace SilentEntities
 {
@@ -25,6 +26,20 @@ namespace SilentEntities
             GL_STATIC_DRAW
         );
         glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        //load texture coords
+        unsigned int textureBuffer;
+        glGenBuffers(1,&textureBuffer);
+        this->texBufferID = textureBuffer;
+        glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+        glBufferData(
+            GL_ARRAY_BUFFER, 
+            this->model.textureCoords.size()*sizeof(float), 
+            this->model.textureCoords.data(), 
+            GL_STATIC_DRAW
+        );
+        glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE,0,(void*)0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         //load indices
@@ -62,25 +77,30 @@ namespace SilentEntities
         return this->vertBufferID;
     }
 
-    SilentEntity loadOBJModel(std::string path)
+    unsigned int SilentEntity::getTextureID()
+    {
+        return this->textureID;
+    }
+
+    void SilentEntity::setTextureID(unsigned int id)
+    {
+        this->textureID = id;
+    }
+
+    SilentEntity loadOBJModel(std::string modelPath, std::string texturePath)
     {
         
         //temporary
         std::vector<SilentMaths::vec3f> tempVertices;
         std::vector<SilentMaths::vec3f> tempNormals;
-        std::vector<SilentMaths::vec3f> tempUVs;
-
-        //Processed here
-        std::vector<SilentMaths::vec3f> vertices;
-        std::vector<SilentMaths::vec3f> normals;
-        std::vector<SilentMaths::vec3f> textureCoords;
+        std::vector<SilentMaths::vec2f> tempUVs;
 
         SilentModel model;
 
-        FILE * objFile = fopen(path.data(), "r");
+        FILE * objFile = fopen(modelPath.data(), "r");
         if(objFile == NULL)
         {
-            printf("Couldn't open file %s\n",path.data());
+            printf("Couldn't open file %s\n",modelPath.data());
             exit(0);
         }
 
@@ -108,8 +128,9 @@ namespace SilentEntities
 
             else if(strcmp(buffer, "vt") == 0)
             {
-                vec3f vector;
+                vec2f vector;
                 fscanf(objFile, "%f %f\n", &vector.x, &vector.y);
+                vector.x = 1 - vector.x;
                 tempUVs.push_back(vector);
             }
 
@@ -124,7 +145,7 @@ namespace SilentEntities
 
                 if(formatted != 9)
                 {
-                    printf("Unable to process faces of the obj file %s\n",path.data());
+                    printf("Unable to process faces of the obj file %s\n",modelPath.data());
                 }
                 
                 model.vertices.push_back(tempVertices[vIndex[0]-1].x);
@@ -139,6 +160,17 @@ namespace SilentEntities
                 model.vertices.push_back(tempVertices[vIndex[2]-1].y);
                 model.vertices.push_back(tempVertices[vIndex[2]-1].z);
 
+
+
+                model.textureCoords.push_back(tempUVs[uvIndex[0]-1].x);
+                model.textureCoords.push_back(tempUVs[uvIndex[0]-1].y);
+
+                model.textureCoords.push_back(tempUVs[uvIndex[1]-1].x);
+                model.textureCoords.push_back(tempUVs[uvIndex[1]-1].y);
+
+                model.textureCoords.push_back(tempUVs[uvIndex[2]-1].x);
+                model.textureCoords.push_back(tempUVs[uvIndex[2]-1].y);
+
                 model.indices.push_back(model.indices.size());
                 model.indices.push_back(model.indices.size());
                 model.indices.push_back(model.indices.size());
@@ -146,9 +178,31 @@ namespace SilentEntities
             }        
         }
         
+
+        //Load texture
+        SDL_Surface* surface = IMG_Load(texturePath.data());
+        unsigned int textureID;
+        glGenTextures(1,&textureID);
+        glBindTexture(GL_TEXTURE_2D,textureID);
+
+        int imageMode = GL_RGB;
+
+        if(surface->format->BytesPerPixel == 4)
+        {
+            imageMode = GL_RGBA;
+        }
+
+        glTexImage2D(GL_TEXTURE_2D,0,imageMode,surface->w,surface->h,0,imageMode,
+            GL_UNSIGNED_BYTE, surface->pixels);
+
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
+        glBindTexture(GL_TEXTURE_2D,0);
+
         SilentEntity entity;
+        entity.setTextureID(textureID);
         entity.model = model;
-        
         entity.position = vec3f();
         entity.rotation = vec3f();
         entity.scale = vec3f();

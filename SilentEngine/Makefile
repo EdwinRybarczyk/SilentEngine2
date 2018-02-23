@@ -5,7 +5,7 @@ renderer = src/SilentRenderer/*.cpp
 entities = src/SilentEntities/*.cpp
 system = src/SilentSystem/*.cpp
 test = src/test.cpp
-libs = -lSDL2 -lGL -lGLEW
+libs = -lSDL2 -lGL -lGLEW -lSDL2_image
 src = $(maths) $(renderer) $(entities) $(system) $(test)
 all:
 	$(compiler) -Wall $(src) -o $(output) $(libs)
