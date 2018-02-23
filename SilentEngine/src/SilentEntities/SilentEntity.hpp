@@ -1,3 +1,4 @@
+#pragma once
 #include "../SilentMaths/SilentVectors.hpp"
 #include <iostream>
 #include <vector>
@@ -10,7 +11,6 @@ namespace SilentEntities
         std::vector<float> normals;
         std::vector<float> textureCoords;
         std::vector<unsigned int> indices;
-
     };
 
     class SilentEntity
@@ -19,15 +19,20 @@ namespace SilentEntities
         unsigned int vaoID;
         unsigned int vertBufferID;
         unsigned int IndBufferID;
+        unsigned int textureID;
+
         public:
         SilentModel model;
-        float posX,posY,posZ;
-        float rotX,rotY,rotZ;
-        float scaleX,scaleY,scaleZ;
+        //float posX,posY,posZ;
+        SilentMaths::vec3f position;
+        SilentMaths::vec3f rotation;
+        SilentMaths::vec3f scale;
 
         public:
         void load();
         void unload();
+
+
         unsigned int getVAOID();
         unsigned int getIndID();
         unsigned int getVertID();

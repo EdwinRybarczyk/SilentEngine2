@@ -9,24 +9,9 @@ namespace SilentEntities
     {
         //Create vao
         unsigned int vaoID;
-        glGenVertexArrays(3, &vaoID);
+        glGenVertexArrays(2, &vaoID);
         this->vaoID = vaoID;
         glBindVertexArray(vaoID);
-
-        //load indices
-        
-        unsigned int indiceBuffer;
-        glGenBuffers(1,&indiceBuffer);
-        this->IndBufferID = indiceBuffer;
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiceBuffer);
-        glBufferData(
-            GL_ELEMENT_ARRAY_BUFFER, 
-            this->model.indices.size()*sizeof(unsigned int), 
-            this->model.indices.data(), 
-            GL_STATIC_DRAW
-        );
-        glVertexAttribPointer(0,1,GL_UNSIGNED_INT,false,0,0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
         //load vertex data
         unsigned int vertexBuffer;
@@ -39,9 +24,21 @@ namespace SilentEntities
             this->model.vertices.data(), 
             GL_STATIC_DRAW
         );
-        glVertexAttribPointer(1,3,GL_FLOAT,false,0,0);
+        glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+        //load indices
+        unsigned int indiceBuffer;
+        glGenBuffers(1,&indiceBuffer);
+        this->IndBufferID = indiceBuffer;
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiceBuffer);
+        glBufferData(
+            GL_ELEMENT_ARRAY_BUFFER, 
+            this->model.indices.size()*sizeof(unsigned int), 
+            this->model.indices.data(), 
+            GL_STATIC_DRAW
+        );
+        
         glBindVertexArray(0);
     }
 
@@ -148,26 +145,13 @@ namespace SilentEntities
 
             }        
         }
-
-        /*
-        for(unsigned int i = 0; i < model.indices.size(); i++)
-        {
-            printf("%i\n",model.indices[i]);
-        }
-        */
-
+        
         SilentEntity entity;
         entity.model = model;
         
-        entity.posX = 0;
-        entity.posY = 0;
-        entity.posZ = 0;
-        entity.rotX = 0;
-        entity.rotY = 0;
-        entity.rotZ = 0;
-        entity.scaleX = 1;
-        entity.scaleY = 1;
-        entity.scaleZ = 1;
+        entity.position = vec3f();
+        entity.rotation = vec3f();
+        entity.scale = vec3f();
         return entity;
     }
 }

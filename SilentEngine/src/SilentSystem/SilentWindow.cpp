@@ -1,10 +1,10 @@
+#include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include "SilentWindow.hpp"
 #include <GL/gl.h>
 #define VULKAN_ENABLED 1
 #define OPENGL_ENABLED 1
 #define SOFTWARE_RENDERING 0
-
 
 using namespace SilentSystem;
 
@@ -49,7 +49,7 @@ namespace SilentSystem
             );
 
             //Require minimum OpenGL 2
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+            //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 
             //Set double buffering
             if(this->doubleBuffering)
@@ -60,6 +60,12 @@ namespace SilentSystem
             glContext = SDL_GL_CreateContext(window);
             this->windowOpen = true;
             glClearColor(0.25, 0, 0.5, 0);
+
+            if(glewInit() != GLEW_OK)
+            {
+                printf("Couldn't initialise\n");
+            }
+            glewExperimental = GL_TRUE;
 
         }
 

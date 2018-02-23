@@ -27,25 +27,15 @@ namespace SilentRenderingEngine
     void SilentRenderer::renderEntity(SilentEntities::SilentEntity entity)
     {
         glBindVertexArray(entity.getVAOID());
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, entity.getIndID());
-        glBindBuffer(GL_ARRAY_BUFFER,entity.getVertID());
         glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        
         
         glDrawElements(
             GL_TRIANGLES,
-            entity.model.indices.size(),
+            entity.model.vertices.size(),
             GL_UNSIGNED_INT,
             0
         );
-        //glDrawArrays(GL_TRIANGLES,0,entity.model.vertices.size()/3);
-        printf("here\n");
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ARRAY_BUFFER,0);
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
+
         glBindVertexArray(0);
     }
 

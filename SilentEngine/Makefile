@@ -1,11 +1,11 @@
 compiler = g++
 output = bin/SilentEngine
-maths = src/SilentMaths/*
-renderer = src/SilentRenderer/*
-entities = src/SilentEntities/*
-system = src/SilentSystem/*
+maths = src/SilentMaths/*.hpp
+renderer = src/SilentRenderer/*.cpp
+entities = src/SilentEntities/*.cpp
+system = src/SilentSystem/*.cpp
 test = src/test.cpp
-libs = -lSDL2 -lGL
+libs = -lSDL2 -lGL -lGLEW
 src = $(maths) $(renderer) $(entities) $(system) $(test)
 all:
 	$(compiler) -Wall $(src) -o $(output) $(libs)
