@@ -29,12 +29,17 @@ namespace SilentRenderingEngine
         glBindVertexArray(entity.getVAOID());
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
+        
+        /*
         glDrawElements(
             GL_TRIANGLES,
-            entity.model.indices.size(),
+            entity.model.indices.size()/3,
             GL_UNSIGNED_INT,
             0
-        );
+        );*/
+        printf("here\n");
+        glDrawArrays(GL_TRIANGLES,0,entity.model.vertices.size());
+        
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);

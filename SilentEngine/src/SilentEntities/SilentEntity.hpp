@@ -6,10 +6,11 @@ namespace SilentEntities
     class SilentModel
     {
         public:
-        std::vector<SilentMaths::vec3f> vertices;
-        std::vector<SilentMaths::vec3f> normals;
-        std::vector<SilentMaths::vec3f> textureCoords;
+        std::vector<float> vertices;
+        std::vector<float> normals;
+        std::vector<float> textureCoords;
         std::vector<unsigned int> indices;
+
     };
 
     class SilentEntity

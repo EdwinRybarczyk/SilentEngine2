@@ -7,7 +7,6 @@ namespace SilentEntities
 {
     void SilentEntity::load()
     {
-        printf("here\n");
         //Create vao
         unsigned int vaoID;
         glGenVertexArrays(3, &vaoID);
@@ -68,14 +67,17 @@ namespace SilentEntities
     SilentEntity loadOBJModel(std::string path)
     {
         
-
+        //temporary
         std::vector<SilentMaths::vec3f> tempVertices;
         std::vector<SilentMaths::vec3f> tempNormals;
         std::vector<SilentMaths::vec3f> tempUVs;
 
-        std::vector<unsigned int> vertIndices;
-        std::vector<unsigned int> normIndices;
-        std::vector<unsigned int> UVIndices;
+        //Processed here
+        std::vector<SilentMaths::vec3f> vertices;
+        std::vector<SilentMaths::vec3f> normals;
+        std::vector<SilentMaths::vec3f> textureCoords;
+
+        SilentModel model;
 
         FILE * objFile = fopen(path.data(), "r");
         if(objFile == NULL)
@@ -118,53 +120,38 @@ namespace SilentEntities
                 unsigned int vIndex[3], uvIndex[3], nIndex[3];
 
                 int formatted = fscanf(objFile, "%u/%u/%u %u/%u/%u %u/%u/%u\n",
-                    &vIndex[0],&vIndex[1],&vIndex[2],
-                    &uvIndex[0], &uvIndex[1], &uvIndex[2],
-                    &nIndex[0],&nIndex[1],&nIndex[2]);
+                    &vIndex[0],&uvIndex[0],&nIndex[0],
+                    &vIndex[1], &uvIndex[1], &nIndex[1],
+                    &vIndex[2],&uvIndex[2],&nIndex[2]);
 
                 if(formatted != 9)
                 {
                     printf("Unable to process faces of the obj file %s\n",path.data());
                 }
-                vertIndices.push_back(vIndex[0]);
-                vertIndices.push_back(vIndex[1]);
-                vertIndices.push_back(vIndex[2]);
+                
+                model.vertices.push_back(tempVertices[vIndex[0]-1].x);
+                model.vertices.push_back(tempVertices[vIndex[0]-1].y);
+                model.vertices.push_back(tempVertices[vIndex[0]-1].z);
 
-                normIndices.push_back(nIndex[0]);
-                normIndices.push_back(nIndex[1]);
-                normIndices.push_back(nIndex[2]);
+                model.vertices.push_back(tempVertices[vIndex[1]-1].x);
+                model.vertices.push_back(tempVertices[vIndex[1]-1].y);
+                model.vertices.push_back(tempVertices[vIndex[1]-1].z);
 
-                UVIndices.push_back(uvIndex[0]);
-                UVIndices.push_back(uvIndex[1]);
-                UVIndices.push_back(uvIndex[2]);
+                model.vertices.push_back(tempVertices[vIndex[2]-1].x);
+                model.vertices.push_back(tempVertices[vIndex[2]-1].y);
+                model.vertices.push_back(tempVertices[vIndex[2]-1].z);
+
+                model.indices.push_back(model.indices.size());
+                model.indices.push_back(model.indices.size());
+                model.indices.push_back(model.indices.size());
+
             }        
         }
 
         
-        //Process vertices
-        SilentModel model;
-        for(unsigned int i = 0; i < vertIndices.size(); i++)
-        {
-            unsigned int currentPos = vertIndices[i]-1;
-            vec3f vertex = tempVertices[currentPos];
-            model.vertices.push_back(vertex);
-            model.indices.push_back(currentPos);
-        }
-
-        for(unsigned int i = 0; i < normIndices.size(); i++)
-        {
-            vec3f normal = tempNormals[normIndices[i]-1];
-            model.normals.push_back(normal);
-        }
-
-        for(unsigned int i = 0; i < UVIndices.size(); i++)
-        {
-            vec3f texture = tempUVs[UVIndices[i]-1];
-            model.textureCoords.push_back(texture);
-        }
-
         SilentEntity entity;
         entity.model = model;
+        
         entity.posX = 0;
         entity.posY = 0;
         entity.posZ = 0;
