@@ -14,6 +14,7 @@ namespace SilentEntities
         glBindVertexArray(vaoID);
 
         //load indices
+        
         unsigned int indiceBuffer;
         glGenBuffers(1,&indiceBuffer);
         this->IndBufferID = indiceBuffer;
@@ -34,7 +35,7 @@ namespace SilentEntities
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
         glBufferData(
             GL_ARRAY_BUFFER, 
-            this->model.vertices.size()*sizeof(vec3f), 
+            this->model.vertices.size()*sizeof(float), 
             this->model.vertices.data(), 
             GL_STATIC_DRAW
         );
@@ -148,7 +149,13 @@ namespace SilentEntities
             }        
         }
 
-        
+        /*
+        for(unsigned int i = 0; i < model.indices.size(); i++)
+        {
+            printf("%i\n",model.indices[i]);
+        }
+        */
+
         SilentEntity entity;
         entity.model = model;
         
