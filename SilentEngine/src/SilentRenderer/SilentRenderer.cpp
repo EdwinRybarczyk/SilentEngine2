@@ -30,7 +30,7 @@ namespace SilentRenderingEngine
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
         glBindTexture(GL_TEXTURE_2D,entity.getTextureID());
-
+        
         glDrawElements(
             GL_TRIANGLES,
             entity.model.vertices.size(),

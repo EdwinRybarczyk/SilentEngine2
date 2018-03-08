@@ -3,10 +3,11 @@
 #define GL_GLEXT_PROTOTYPES
 #include <GL/gl.h>
 #include <SDL2/SDL_image.h>
+//#include <glm/gtc/matrix_transform.hpp>
 using namespace SilentMaths;
 namespace SilentEntities
 {
-    void SilentEntity::load()
+    void SilentEntity::loadToVao()
     {
         //Create vao
         unsigned int vaoID;
@@ -57,7 +58,7 @@ namespace SilentEntities
         glBindVertexArray(0);
     }
 
-    void SilentEntity::unload()
+    void SilentEntity::unloadFromVao()
     {
         glBindVertexArray(0);
     }
@@ -85,6 +86,21 @@ namespace SilentEntities
     void SilentEntity::setTextureID(unsigned int id)
     {
         this->textureID = id;
+    }
+
+
+    void SilentEntity::translate()
+    {
+        
+    }
+
+    void SilentEntity::rotate(float angle, SilentMaths::vec3f rotation)
+    {
+    }
+
+    void SilentEntity::scale()
+    {
+        
     }
 
     SilentEntity loadOBJModel(std::string modelPath, std::string texturePath)
@@ -202,10 +218,7 @@ namespace SilentEntities
 
         SilentEntity entity;
         entity.setTextureID(textureID);
-        entity.model = model;
-        entity.position = vec3f();
-        entity.rotation = vec3f();
-        entity.scale = vec3f();
+        entity.position = mat4x4f();
         return entity;
     }
 }

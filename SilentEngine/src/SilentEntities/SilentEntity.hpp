@@ -1,7 +1,9 @@
 #pragma once
 #include "../SilentMaths/SilentVectors.hpp"
+#include "../SilentMaths/SilentMatrices.hpp"
 #include <iostream>
 #include <vector>
+//#include <glm/mat4x4.hpp>
 namespace SilentEntities
 {
     class SilentModel
@@ -21,24 +23,24 @@ namespace SilentEntities
         unsigned int texBufferID;
         unsigned int IndBufferID;
         unsigned int textureID;
+        //glm::mat4x4 position;
 
         public:
+        SilentMaths::mat4x4f position;
+        //Model management
         SilentModel model;
-        //float posX,posY,posZ;
-        SilentMaths::vec3f position;
-        SilentMaths::vec3f rotation;
-        SilentMaths::vec3f scale;
-
-        public:
-        void load();
-        void unload();
-
-
+        void loadToVao();
+        void unloadFromVao();
         unsigned int getVAOID();
         unsigned int getIndID();
         unsigned int getVertID();
         unsigned int getTextureID();
         void setTextureID(unsigned int ID);
+
+        //Entity management
+        void translate();
+        void rotate(float angle, SilentMaths::vec3f rotation);
+        void scale();
     };
 
 
