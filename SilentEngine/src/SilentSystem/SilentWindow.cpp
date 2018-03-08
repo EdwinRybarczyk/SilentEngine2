@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include "SilentWindow.hpp"
 #include <GL/gl.h>
+#include <vulkan/vulkan.h>
 #define VULKAN_ENABLED 1
 #define OPENGL_ENABLED 1
 #define SOFTWARE_RENDERING 0
@@ -11,7 +12,11 @@ using namespace SilentSystem;
 namespace SilentSystem
 {
     SDL_Window* window = NULL;
+    //opengl
     SDL_GLContext glContext;
+
+    //vulkan
+    VkInstance instance;
 
     SilentWindow::SilentWindow()
     {
@@ -28,16 +33,15 @@ namespace SilentSystem
 
     void SilentWindow::createWindow()
     {
+        //Initialise SDL
+        if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
+        {
+            printf("Couldn't initialise SDL!\n");
+            exit(1);
+        }
+
         if(this->api == OpenGL)
         {
-            
-            //Initialise SDL
-            if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
-            {
-                printf("Couldn't initialise SDL!\n");
-                exit(1);
-            }
-
             //Create SDL window
             window = SDL_CreateWindow(
                 (const char*)this->title.data(),
@@ -71,7 +75,39 @@ namespace SilentSystem
 
         else if(this->api == Vulkan)
         {
+            //Create SDL window
+            window = SDL_CreateWindow(
+                (const char*)this->title.data(),
+                SDL_WINDOWPOS_CENTERED,
+                SDL_WINDOWPOS_CENTERED,
+                this->width,
+                this->height,
+                SDL_WINDOW_SHOWN
+            );
 
+#ifdef __linux__
+#define VK_USE_PLATFORM_WIN32_KHR
+            const char* instanceExtNames[] = 
+            {
+                VK_KHR_SURFACE_EXTENSION_NAME,
+                
+            };
+#endif
+#ifdef _WIN32    
+
+#endif
+
+            VkApplicationInfo appInfo = {};
+            appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+            appInfo.pApplicationName = this->title.data();
+            appInfo.applicationVersion = VK_MAKE_VERSION(1,0,0);
+            appInfo.pEngineName = "Silent Game Engine";
+            appInfo.engineVersion = VK_MAKE_VERSION(1,0,0);
+            appInfo.apiVersion = VK_API_VERSION_1_0;
+
+            VkInstanceCreateInfo createInfo = {};
+            createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+            createInfo.pApplicationInfo = &appInfo;
         }
 
         else if(this->api == Software)
