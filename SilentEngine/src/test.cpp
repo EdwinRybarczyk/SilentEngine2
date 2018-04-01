@@ -22,8 +22,10 @@ int main()
     shaderProgram.bindAttribute(1,"texCoord");
 
     SilentRenderer renderer;
-    SilentEntity sampleEntity = loadOBJModel("src/wolfe.obj","src/WolfeTexture.png");
+    SilentEntity sampleEntity = loadOBJModel("src/plane.obj","src/WolfeTexture.png");
     sampleEntity.loadToVao();
+
+
     while(window.windowOpen)
     {
         renderer.prepare();

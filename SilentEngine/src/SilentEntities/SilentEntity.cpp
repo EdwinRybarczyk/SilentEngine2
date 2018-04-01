@@ -94,7 +94,7 @@ namespace SilentEntities
         
     }
 
-    void SilentEntity::rotate(float angle, SilentMaths::vec3f rotation)
+    void SilentEntity::rotate(float angle, Vector3<float> rotation)
     {
     }
 
@@ -107,9 +107,9 @@ namespace SilentEntities
     {
         
         //temporary
-        std::vector<SilentMaths::vec3f> tempVertices;
-        std::vector<SilentMaths::vec3f> tempNormals;
-        std::vector<SilentMaths::vec2f> tempUVs;
+        std::vector<Vector3<float>> tempVertices;
+        std::vector<Vector3<float>> tempNormals;
+        std::vector<Vector2<float>> tempUVs;
 
         SilentModel model;
 
@@ -130,21 +130,21 @@ namespace SilentEntities
             }
             if(strcmp(buffer, "v") == 0)
             {
-                vec3f vector;
+                Vector3<float> vector;
                 fscanf(objFile, "%f %f %f\n", &vector.x, &vector.y, &vector.z);
                 tempVertices.push_back(vector);
             }
 
             else if(strcmp(buffer, "vn") == 0)
             {
-                vec3f vector;
+                Vector3<float> vector;
                 fscanf(objFile, "%f %f %f\n", &vector.x, &vector.y, &vector.z);
                 tempNormals.push_back(vector);
             }
 
             else if(strcmp(buffer, "vt") == 0)
             {
-                vec2f vector;
+                Vector2<float> vector;
                 fscanf(objFile, "%f %f\n", &vector.x, &vector.y);
                 vector.x = 1 - vector.x;
                 tempUVs.push_back(vector);
