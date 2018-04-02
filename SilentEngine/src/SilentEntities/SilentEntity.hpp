@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SILENT_ENTITY
+#define SILENT_ENTITY
 #include "../SilentMaths/SilentVectors.hpp"
 #include "../SilentMaths/SilentMatrices.hpp"
 #include <iostream>
@@ -30,14 +31,8 @@ namespace SilentEntities
         SilentMaths::mat4x4f position;
         //Model management
         SilentModel model;
-        void loadToVao();
+        void loadToMemory();
         void unloadFromVao();
-        unsigned int getVAOID();
-        unsigned int getIndID();
-        unsigned int getVertID();
-        unsigned int getTextureID();
-        void setTextureID(unsigned int ID);
-
         //Entity management
         void translate();
         void rotate(float angle, SilentMaths::Vector3<float> rotation);
@@ -47,3 +42,5 @@ namespace SilentEntities
 
     SilentEntity loadOBJModel(std::string modelPath, std::string texturePath);
 }
+
+#endif

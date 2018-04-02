@@ -1,24 +1,24 @@
-#include "SilentEntity.hpp"
-#include <string.h>
 #define GL_GLEXT_PROTOTYPES
 #include <GL/gl.h>
+#include <string.h>
 #include <SDL2/SDL_image.h>
-//#include <glm/gtc/matrix_transform.hpp>
-using namespace SilentMaths;
+#include "SilentEntity.hpp"
+#include "../SilentMaths/SilentVectors.hpp"
+//using namespace SilentMaths;
 namespace SilentEntities
 {
-    void SilentEntity::loadToVao()
+    void SilentEntity::loadToMemory()
     {
-        //Create vao
+        //Create VAO
         unsigned int vaoID;
         glGenVertexArrays(2, &vaoID);
-        this->vaoID = vaoID;
+        this->model.info.vaoID = vaoID;
         glBindVertexArray(vaoID);
 
-        //load vertex data
+        //Load vertex data
         unsigned int vertexBuffer;
         glGenBuffers(1,&vertexBuffer);
-        this->vertBufferID = vertexBuffer;
+        this->model.info.vertexBuffer = vertexBuffer;
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
         glBufferData(
             GL_ARRAY_BUFFER, 
@@ -32,7 +32,7 @@ namespace SilentEntities
         //load texture coords
         unsigned int textureBuffer;
         glGenBuffers(1,&textureBuffer);
-        this->texBufferID = textureBuffer;
+        this->model.info.textureCoordinateBuffer = textureBuffer;
         glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
         glBufferData(
             GL_ARRAY_BUFFER, 
@@ -46,7 +46,7 @@ namespace SilentEntities
         //load indices
         unsigned int indiceBuffer;
         glGenBuffers(1,&indiceBuffer);
-        this->IndBufferID = indiceBuffer;
+        this->model.info.indiceBuffer = indiceBuffer;
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiceBuffer);
         glBufferData(
             GL_ELEMENT_ARRAY_BUFFER, 
@@ -63,38 +63,13 @@ namespace SilentEntities
         glBindVertexArray(0);
     }
 
-    unsigned int SilentEntity::getVAOID()
-    {
-        return this->vaoID;
-    }
-
-    unsigned int SilentEntity::getIndID()
-    {
-        return this->IndBufferID;
-    }
-
-    unsigned int SilentEntity::getVertID()
-    {
-        return this->vertBufferID;
-    }
-
-    unsigned int SilentEntity::getTextureID()
-    {
-        return this->textureID;
-    }
-
-    void SilentEntity::setTextureID(unsigned int id)
-    {
-        this->textureID = id;
-    }
-
 
     void SilentEntity::translate()
     {
         
     }
 
-    void SilentEntity::rotate(float angle, Vector3<float> rotation)
+    void SilentEntity::rotate(float angle, SilentMaths::Vector3<float> rotation)
     {
     }
 
@@ -107,9 +82,9 @@ namespace SilentEntities
     {
         
         //temporary
-        std::vector<Vector3<float>> tempVertices;
-        std::vector<Vector3<float>> tempNormals;
-        std::vector<Vector2<float>> tempUVs;
+        std::vector<SilentMaths::Vector3<float>> tempVertices;
+        std::vector<SilentMaths::Vector3<float>> tempNormals;
+        std::vector<SilentMaths::Vector2<float>> tempUVs;
 
         SilentModel model;
 
@@ -130,21 +105,21 @@ namespace SilentEntities
             }
             if(strcmp(buffer, "v") == 0)
             {
-                Vector3<float> vector;
+                SilentMaths::Vector3<float> vector;
                 fscanf(objFile, "%f %f %f\n", &vector.x, &vector.y, &vector.z);
                 tempVertices.push_back(vector);
             }
 
             else if(strcmp(buffer, "vn") == 0)
             {
-                Vector3<float> vector;
+                SilentMaths::Vector3<float> vector;
                 fscanf(objFile, "%f %f %f\n", &vector.x, &vector.y, &vector.z);
                 tempNormals.push_back(vector);
             }
 
             else if(strcmp(buffer, "vt") == 0)
             {
-                Vector2<float> vector;
+                SilentMaths::Vector2<float> vector;
                 fscanf(objFile, "%f %f\n", &vector.x, &vector.y);
                 vector.x = 1 - vector.x;
                 tempUVs.push_back(vector);
@@ -217,8 +192,8 @@ namespace SilentEntities
         glBindTexture(GL_TEXTURE_2D,0);
 
         SilentEntity entity;
-        entity.setTextureID(textureID);
-        entity.position = mat4x4f();
+        entity.model.info.texture = textureID;
+        entity.position = SilentMaths::mat4x4f();
         return entity;
     }
 }

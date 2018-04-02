@@ -26,10 +26,10 @@ namespace SilentRenderingEngine
 
     void SilentRenderer::renderEntity(SilentEntities::SilentEntity entity)
     {
-        glBindVertexArray(entity.getVAOID());
+        glBindVertexArray(entity.model.info.vaoID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
-        glBindTexture(GL_TEXTURE_2D,entity.getTextureID());
+        glBindTexture(GL_TEXTURE_2D,entity.model.info.texture);
         
         glDrawElements(
             GL_TRIANGLES,

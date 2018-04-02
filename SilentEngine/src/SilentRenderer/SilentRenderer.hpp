@@ -1,11 +1,10 @@
-#pragma once
+#ifndef SILENT_RENDERER
+#define SILENT_RENDERER
 #include "../SilentEntities/SilentEntity.hpp"
 namespace SilentRenderingEngine
 {
     class SilentRenderer
     {
-        public:
-
         public:
         SilentRenderer();
         ~SilentRenderer();
@@ -14,3 +13,5 @@ namespace SilentRenderingEngine
         void render();
     };
 }
+
+#endif

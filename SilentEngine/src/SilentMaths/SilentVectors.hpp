@@ -1,3 +1,6 @@
+#ifndef SILENT_VECTORS
+#define SILENT_VECTORS
+
 namespace SilentMaths
 {
     template <class T> class Vector3 
@@ -72,3 +75,5 @@ namespace SilentMaths
         }
     };
 }
+
+#endif

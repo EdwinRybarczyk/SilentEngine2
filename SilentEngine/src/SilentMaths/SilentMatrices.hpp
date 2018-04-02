@@ -1,5 +1,6 @@
-#pragma once
-#include "SilentMaths.hpp"
+#ifndef SILENT_MATRICES
+#define SILENT_MATRICES 
+ 
 namespace SilentMaths
 {
     class mat4x4f
@@ -20,8 +21,6 @@ namespace SilentMaths
     {
         public:
         T data[9];
-
-
         /*
             0,1,2,
             3,4,5,
@@ -148,3 +147,4 @@ namespace SilentMaths
         }
     };
 }
+#endif

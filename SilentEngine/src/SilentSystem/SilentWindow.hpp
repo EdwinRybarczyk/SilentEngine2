@@ -1,6 +1,6 @@
-#include <iostream>
 #ifndef SILENT_WINDOW
 #define SILENT_WINDOW
+#include <iostream>
 namespace SilentSystem
 {
     enum renderingAPI
@@ -35,5 +35,4 @@ namespace SilentSystem
 
 
 }
-
-#endif //SILENT_WINDOW
+#endif

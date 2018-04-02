@@ -1,8 +1,8 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
-#include "SilentWindow.hpp"
 #include <GL/gl.h>
 #include <vulkan/vulkan.h>
+#include "SilentWindow.hpp"
 #define VULKAN_ENABLED 1
 #define OPENGL_ENABLED 1
 #define SOFTWARE_RENDERING 0
@@ -85,18 +85,7 @@ namespace SilentSystem
                 SDL_WINDOW_SHOWN
             );
 
-#ifdef __linux__
-#define VK_USE_PLATFORM_WIN32_KHR
-            const char* instanceExtNames[] = 
-            {
-                VK_KHR_SURFACE_EXTENSION_NAME,
-                
-            };
-#endif
-#ifdef _WIN32    
-
-#endif
-
+/*
             VkApplicationInfo appInfo = {};
             appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
             appInfo.pApplicationName = this->title.data();
@@ -107,7 +96,7 @@ namespace SilentSystem
 
             VkInstanceCreateInfo createInfo = {};
             createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-            createInfo.pApplicationInfo = &appInfo;
+            createInfo.pApplicationInfo = &appInfo;*/
         }
 
         else if(this->api == Software)

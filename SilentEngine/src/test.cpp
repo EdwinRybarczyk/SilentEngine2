@@ -23,7 +23,7 @@ int main()
 
     SilentRenderer renderer;
     SilentEntity sampleEntity = loadOBJModel("src/plane.obj","src/WolfeTexture.png");
-    sampleEntity.loadToVao();
+    sampleEntity.loadToMemory();
 
 
     while(window.windowOpen)
