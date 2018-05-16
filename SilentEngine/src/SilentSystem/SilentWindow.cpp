@@ -65,9 +65,13 @@ namespace SilentSystem
             this->windowOpen = true;
             glClearColor(0.25, 0, 0.5, 0);
 
-            if(glewInit() != GLEW_OK)
+
+            glewExperimental = GL_TRUE;
+            GLenum error = glewInit();
+            if(error != GLEW_OK)
             {
-                printf("Couldn't initialise OpenGL\n");
+                std::cout << "Couldn't initialise OpenGL\n";
+                std::cout << "Error: " << glewGetErrorString(error) << "\n";
             }
             glewExperimental = GL_TRUE;
 
