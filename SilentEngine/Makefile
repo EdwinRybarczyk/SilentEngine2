@@ -7,5 +7,6 @@ system = src/SilentSystem/*.cpp
 test = src/test.cpp
 libs = -lSDL2 -lGL -lGLEW -lSDL2_image
 src = $(renderer) $(entities) $(system) $(test)
+flags = -Wall -std=c++11
 all:
-	$(compiler) -Wall $(src) -o $(output) $(libs)
+	$(compiler) $(flags) $(src) -o $(output) $(libs)

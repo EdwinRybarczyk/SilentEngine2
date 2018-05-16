@@ -14,24 +14,24 @@ int main()
     window.title = "Sample Window";
     window.createWindow();
 
-    Shader shaderProgram;
-    shaderProgram.loadShader("src/SilentRenderer/vertexShader.txt",vertexShader);
-    shaderProgram.loadShader("src/SilentRenderer/fragmentShader.txt",fragmentShader);
-    shaderProgram.load();
-    shaderProgram.bindAttribute(0,"position");
-    shaderProgram.bindAttribute(1,"texCoord");
+    //Shader shaderProgram;
+    //shaderProgram.loadShader("src/SilentRenderer/vertexShader.txt",vertexShader);
+    //shaderProgram.loadShader("src/SilentRenderer/fragmentShader.txt",fragmentShader);
+    //shaderProgram.load();
+    //shaderProgram.bindAttribute(0,"position");
+    //shaderProgram.bindAttribute(1,"texCoord");
 
-    SilentRenderer renderer;
-    SilentEntity sampleEntity = loadOBJModel("src/plane.obj","src/WolfeTexture.png");
-    sampleEntity.loadToMemory();
+    //SilentRenderer renderer;
+    //SilentEntity sampleEntity = loadOBJModel("src/plane.obj","src/WolfeTexture.png");
+    //sampleEntity.loadToMemory();
 
 
     while(window.windowOpen)
     {
-        renderer.prepare();
-        shaderProgram.startProgram();
-        renderer.renderEntity(sampleEntity);
-        shaderProgram.stopProgram();
+        //renderer.prepare();
+        //shaderProgram.startProgram();
+        //renderer.renderEntity(sampleEntity);
+        //shaderProgram.stopProgram();
         window.updateWindow();
     }
     return 0;

@@ -6,7 +6,7 @@ namespace SilentMaths
     class mat4x4f
     {
         public:
-        float data[15] = {};
+        float data[15];
         mat4x4f()
         {
             this->data[0] = 1;

@@ -1,6 +1,6 @@
 #include <GL/glew.h>
-#include <SDL2/SDL.h>
 #include <GL/gl.h>
+#include <SDL2/SDL.h>
 #include <vulkan/vulkan.h>
 #include "SilentWindow.hpp"
 #define VULKAN_ENABLED 1
@@ -67,7 +67,7 @@ namespace SilentSystem
 
             if(glewInit() != GLEW_OK)
             {
-                printf("Couldn't initialise\n");
+                printf("Couldn't initialise OpenGL\n");
             }
             glewExperimental = GL_TRUE;
 

@@ -82,9 +82,9 @@ namespace SilentEntities
     {
         
         //temporary
-        std::vector<SilentMaths::Vector3<float>> tempVertices;
-        std::vector<SilentMaths::Vector3<float>> tempNormals;
-        std::vector<SilentMaths::Vector2<float>> tempUVs;
+        std::vector<SilentMaths::Vector3<float> > tempVertices;
+        std::vector<SilentMaths::Vector3<float> > tempNormals;
+        std::vector<SilentMaths::Vector2<float> > tempUVs;
 
         SilentModel model;
 
